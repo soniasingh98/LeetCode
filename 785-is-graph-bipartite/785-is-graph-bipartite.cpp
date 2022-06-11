@@ -1,30 +1,29 @@
 class Solution {
+
 public:
     bool isBipartite(vector<vector<int>>& graph) {
         vector<int>vis(graph.size(),-1);
         for(int i=0;i<graph.size();i++){
             if(vis[i]==-1){
-                if(!bip(i,vis,graph)){
+                if(!bip(i,graph,vis)){
                     return false;
                 }
             }
         }
         return true;
     }
-    bool bip(int node,vector<int>&vis,vector<vector<int>>&graph){
-        vis[node]=1;
-        queue<int>q;
-        q.push(node);
-        while(!q.empty()){
-            int a=q.front();
-            q.pop();
-            for(auto it:graph[a]){
-                if(vis[it]==-1){
-                    q.push(it);
-                    vis[it]=1-vis[a];
+    bool bip(int node,vector<vector<int>>&graph,vector<int>&vis){
+        if(vis[node]==-1){
+            vis[node]=1;
+        }
+        for(auto it:graph[node]){
+            if(vis[it]==-1){
+                vis[it]=1-vis[node];
+                if(!bip(it,graph,vis)){
+                    return false;
                 }
-                else if(vis[it]==vis[a])return false;
             }
+            else if(vis[it]==vis[node])return false;
         }
         return true;
     }
