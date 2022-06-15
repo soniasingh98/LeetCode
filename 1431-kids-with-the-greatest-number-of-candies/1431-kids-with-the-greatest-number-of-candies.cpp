@@ -4,7 +4,7 @@ public:
         vector<bool>v;
         for(int i=0;i<candies.size();i++){
             candies[i]+=extraCandies;
-            if((int)*max_element(candies.begin(),candies.end())==candies[i]){
+            if(*max_element(candies.begin(),candies.end())==candies[i]){
                 v.push_back(true);
             }
             else{
