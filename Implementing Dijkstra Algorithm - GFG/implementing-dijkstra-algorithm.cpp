@@ -14,7 +14,7 @@ class Solution
         vector<int>distance(V,INT_MAX);
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
         distance[S]=0;
-        pq.push(make_pair(0,S));
+        pq.push({0,S});
         while(!pq.empty()){
             int node=pq.top().second;
             int dist=pq.top().first;
@@ -25,7 +25,7 @@ class Solution
                 int nextdist=it[1];
                 if(distance[next]>dist+nextdist){
                     distance[next]=dist+nextdist;
-                    pq.push(make_pair(distance[next],next));
+                    pq.push({distance[next],next});
                 }
             }
         }
