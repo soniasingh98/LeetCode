@@ -1,8 +1,8 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
 	public:
@@ -10,32 +10,30 @@ class Solution
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
+	    stack<int>s;
+	    vector<int>ans;
 	    vector<int>vis(V,0);
-	    stack<int>st;
 	    for(int i=0;i<V;i++){
 	        if(!vis[i]){
-	            dfs(i,vis,st,adj);
+	            toposort(i,adj,vis,s);
 	        }
 	    }
-	    vector<int>ans;
-	    while(!st.empty()){
-	        ans.push_back(st.top());
-	        st.pop();
+	    while(!s.empty()){
+	        ans.push_back(s.top());
+	        s.pop();
 	    }
 	    return ans;
 	}
-	void dfs(int node,vector<int>&vis,stack<int>&st,vector<int>adj[]){
-	    vis[node]=1;
-	    for(auto it:adj[node]){
-	        if(!vis[it]){
-	            dfs(it,vis,st,adj);
-	        }
+	void toposort(int i,vector<int>adj[],vector<int>&vis,stack<int>&s){
+	    vis[i]=1;
+	    for(auto it:adj[i]){
+	        if(!vis[it])toposort(it,adj,vis,s);
 	    }
-	    st.push(node);
+	    s.push(i);
 	}
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 /*  Function to check if elements returned by user
 *   contains the elements in topological sorted form
@@ -82,4 +80,5 @@ int main() {
     }
     
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
