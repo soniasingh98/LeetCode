@@ -8,26 +8,28 @@ class Solution {
     // Function to detect cycle in a directed graph.
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
-        vector<int>vis(V,0);
-        vector<int>dfsvis(V,0);
+        queue<int>q;
+        vector<int>degree(V,0);
         for(int i=0;i<V;i++){
-            if(!vis[i]){
-                if(dfs(i,adj,vis,dfsvis))return true;
+            for(auto it:adj[i]){
+                degree[it]++;
             }
         }
-        return false;
-    }
-    bool dfs(int n,vector<int>adj[],vector<int>&vis,vector<int>&dfsvis){
-        vis[n]=1;
-        dfsvis[n]=1;
-        for(auto it:adj[n]){
-            if(!vis[it]){
-                if(dfs(it,adj,vis,dfsvis))return true;
-            }
-            else if(dfsvis[it])return true;
+        for(int i=0;i<V;i++){
+            if(degree[i]==0)q.push(i);
         }
-        dfsvis[n]=0;
-        return false;
+        int ct=0;
+        while(!q.empty()){
+            int n=q.front();
+            q.pop();
+            ct++;
+            for(auto it:adj[n]){
+                degree[it]--;
+                if(degree[it]==0)q.push(it);
+            }
+        }
+        if(ct==V)return false;
+        return true;
     }
 };
 
