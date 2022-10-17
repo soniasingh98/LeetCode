@@ -10,9 +10,20 @@ class Solution
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-       // Your code here
-       vector<vector<int>>dp(n,vector<int>(W+1,-1));
-       return f(n-1,wt,val,W,dp);
+       // Your code here;
+       vector<vector<int>>dp(n,vector<int>(W+1,0));
+       for(int w=wt[0];w<=W;w++){
+           dp[0][w]=val[0];
+       }
+       for(int i=1;i<n;i++){
+           for(int w=0;w<=W;w++){
+               int notpick=0+dp[i-1][w];
+               int pick=INT_MIN;
+               if(wt[i]<=w)pick=val[i]+dp[i-1][w-wt[i]];
+               dp[i][w]=max(pick,notpick);
+           }
+       }
+       return dp[n-1][W];
     }
     int f(int i,int wt[],int val[],int W,vector<vector<int>>&dp){
         if(i==0){
