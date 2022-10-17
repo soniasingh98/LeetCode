@@ -10,26 +10,29 @@ class Solution
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
-	    stack<int>s;
+	    vector<int>degree(V,0);
 	    vector<int>ans;
-	    vector<int>vis(V,0);
+	    queue<int>q;
 	    for(int i=0;i<V;i++){
-	        if(!vis[i]){
-	            toposort(i,adj,vis,s);
+	        for(auto it:adj[i]){
+	            degree[it]++;
 	        }
 	    }
-	    while(!s.empty()){
-	        ans.push_back(s.top());
-	        s.pop();
+	    for(int i=0;i<V;i++){
+	        if(degree[i]==0){
+	            q.push(i);
+	        }
+	    }
+	    while(!q.empty()){
+	        int n=q.front();
+	        ans.push_back(n);
+	        q.pop();
+	        for(auto it:adj[n]){
+	            degree[it]--;
+	            if(degree[it]==0)q.push(it);
+	        }
 	    }
 	    return ans;
-	}
-	void toposort(int i,vector<int>adj[],vector<int>&vis,stack<int>&s){
-	    vis[i]=1;
-	    for(auto it:adj[i]){
-	        if(!vis[it])toposort(it,adj,vis,s);
-	    }
-	    s.push(i);
 	}
 };
 
