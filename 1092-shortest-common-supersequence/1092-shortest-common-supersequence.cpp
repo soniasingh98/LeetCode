@@ -1,21 +1,21 @@
 class Solution {
 public:
-    string shortestCommonSupersequence(string str1, string str2) {
+    string shortestCommonSupersequence(string s, string t) {
         // 1. Find the longest common subsequence
-        int n=str1.size();
-        int m=str2.size();
-        vector<vector<int>> t(n+1,vector<int>(m+1,0));
+        int n=s.size();
+        int m=t.size();
+        vector<vector<int>> dp(n+1,vector<int>(m+1,0));
         
         for(int i=1;i<=n;i++)
         {
             for(int j=1;j<=m;j++)
             {
-                if(str1[i-1]==str2[j-1])
+                if(s[i-1]==t[j-1])
                 {
-                    t[i][j] = 1 + t[i-1][j-1];
+                    dp[i][j] = 1 + dp[i-1][j-1];
                 }
                 else {
-                    t[i][j] = max(t[i-1][j],t[i][j-1]);
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
                 }
             }
         }
@@ -27,20 +27,20 @@ public:
         while(i>0 && j>0)
         {
             // Adding same char's
-            if(str1[i-1]==str2[j-1])
+            if(s[i-1]==t[j-1])
             {
-                res+=str1[i-1];
+                res+=s[i-1];
                 i--;
                 j--;
             }
             // Adding different char's
-            else if(t[i-1][j]>t[i][j-1])
+            else if(dp[i-1][j]>dp[i][j-1])
             {
-                res+=str1[i-1];
+                res+=s[i-1];
                 i--;
             }
             else {
-                res+=str2[j-1];
+                res+=t[j-1];
                 j--;
             }
         }
@@ -48,12 +48,12 @@ public:
         
         while(i>0)
         {
-            res+=str1[i-1];
+            res+=s[i-1];
             i--;
         }
         while(j>0)
         {
-            res+=str2[j-1];
+            res+=t[j-1];
             j--;
         }
         //3. Reverse the string as we are iterating from last
