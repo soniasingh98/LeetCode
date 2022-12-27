@@ -3,7 +3,7 @@ public:
     int totalFruit(vector<int>& f) {
        int n=f.size();
         unordered_map<int,int>m;
-        int i=0,j=0,mx=INT_MIN;
+        int i=0,j=0,mx=1;
         while(j<n){
             m[f[j]]++;
             if(m.size()<=2){
@@ -21,7 +21,6 @@ public:
              j++;
             }
         }
-        if(f.size()==1 && f[0]==0) return 1;
         return mx;
     }
 };
