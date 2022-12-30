@@ -14,10 +14,12 @@ public:
             if(val==n){
                 ans.push_back(path);
             }
+            else{
             for(auto i:graph[val]){
                 vector<int>v(path);
                 v.push_back(i);
                 q.push(v);
+            }
             }
         }
         return ans;
