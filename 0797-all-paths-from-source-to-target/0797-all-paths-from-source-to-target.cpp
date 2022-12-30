@@ -1,27 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        int n=graph.size()-1;
         vector<vector<int>>ans;
         vector<int>path;
-        int n=graph.size()-1;
-        path.push_back(0);
-        queue<vector<int>>q;
-        q.push(path);
-        while(!q.empty()){
-            path=q.front();
-            q.pop();
-            int val=path.back();
-            if(val==n){
-                ans.push_back(path);
-            }
-            else{
-            for(auto i:graph[val]){
-                vector<int>v(path);
-                v.push_back(i);
-                q.push(v);
-            }
-            }
-        }
+       dfs(graph,0,ans,path,n);   
         return ans;
+    }
+    void dfs(vector<vector<int>>& graph, int s,vector<vector<int>>& ans,vector<int>&path,int n){
+        path.push_back(s);
+        for(auto i:graph[s]){
+            if(i==n){
+                path.push_back(i);
+                ans.push_back(path);
+                path.pop_back();
+                continue;
+            }
+            dfs(graph,i,ans,path,n);
+            path.pop_back();
+        }  
     }
 };
