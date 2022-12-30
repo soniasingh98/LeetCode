@@ -14,7 +14,7 @@ public:
                 path.push_back(i);
                 ans.push_back(path);
                 path.pop_back();
-                continue;
+                // continue;
             }
             dfs(graph,i,ans,path,n);
             path.pop_back();
