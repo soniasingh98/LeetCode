@@ -22,7 +22,7 @@ void removeDuplicates(struct Node* head)
     while(p->next!=NULL){
         if(p->data==((p->next)->data)){
             struct Node *temp=p->next;
-            p->data=temp->data;
+           
             p->next=temp->next;
             free(temp);
         }
