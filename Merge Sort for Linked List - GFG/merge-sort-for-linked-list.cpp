@@ -31,12 +31,11 @@ class Solution{
   void divide(Node*head,Node**first,Node**second){
       Node*s=head;
       Node*f=head->next;
-      while(f){
-          f=f->next;
-          if(f!=NULL){
+      while(f && f->next){
+        
           s=s->next;
-          f=f->next;
-          }
+          f=f->next->next;
+          
       }
       *first=head;
       *second=s->next;
