@@ -2,16 +2,16 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
         if(nums.size()==0)return 0;
-        unordered_map<int,int>m;
+        set<int>s;
         for(auto it:nums){
-            m[it]++;
+           s.insert(it);
         }
         int ct=0,mx=1;
         for(int i=0;i<nums.size();i++){
-            int a=nums[i];
-            if(m.find(nums[i]-1)==m.end()){
+            if(!s.count(nums[i]-1)){
+                int a=nums[i];
                 ct=0;
-                while(m.find(a)!=m.end()){
+                while(s.count(a)){
                     ct++;
                     a++;
                 }
