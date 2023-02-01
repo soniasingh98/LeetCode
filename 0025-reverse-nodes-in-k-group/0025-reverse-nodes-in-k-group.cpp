@@ -19,9 +19,7 @@ public:
         return k==0;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-         if(head==NULL){
-            return NULL;
-        }
+      
         if(k==1)return head;
         if(!proper(head,k))return head;
         int dum=k;
