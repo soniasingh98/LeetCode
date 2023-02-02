@@ -20,8 +20,11 @@ public:
             size++;
         }
         size++;
-        p->next=head;
+       
         k=k%size;
+        if(k==0)return head;
+                
+        p->next=head;
        k=size-k;
        while(k--){
            p=p->next;
