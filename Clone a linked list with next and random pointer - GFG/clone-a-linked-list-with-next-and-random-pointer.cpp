@@ -34,10 +34,10 @@ class Solution
        cur=head;
      
       while(cur){
-          if(cur->next!=NULL){
+          
           cur->next->arb=(cur->arb!=NULL)?cur->arb->next:NULL;
            cur=cur->next->next;
-          }
+          
          
       }
       Node*org=head;
