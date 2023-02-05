@@ -15,19 +15,21 @@ class Solution{
     	// Your code here
     	sort(arr,arr+n);
     	sort(dep,dep+n);
-    	int i=0,j=0,ct=0,mx=INT_MIN;
-    	while(i<n){
+    	int count=1,result=1,i=1,j=0;
+    	while(i<n && j<n){
     	    if(arr[i]<=dep[j]){
-    	        ct++;
-    	        mx=max(mx,ct);
+    	        count++;
     	        i++;
     	    }
     	    else{
-    	        ct--;
+    	        count--;
     	        j++;
     	    }
+    	    if(count>result){
+    	        result=count;
+    	    }
     	}
-    	return mx;
+    	return result;
     }
 };
 
