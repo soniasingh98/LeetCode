@@ -26,7 +26,7 @@ public:
     }
     bool safe(int node,int col,bool graph[101][101],vector<int>&colors,int n){
         for(int k=0;k<n;k++){
-            if(graph[k][node]==1 && colors[k]==col)return false;
+            if(graph[node][k]==1 && colors[k]==col)return false;
         }
         return true;
     }
