@@ -1,52 +1,63 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
-
-
+// } Driver Code Ends
 class Solution
 {
 	public:
+	int par(int i,vector<int>&parent){
+	    if(i==parent[i])return i;
+	    return par(parent[i],parent);
+	}
+     void unionn(int i,int j,vector<int>&rank,vector<int>&parent){
+         int u=par(i,parent),v=par(j,parent);
+         if(rank[u]>rank[v]){
+             parent[v]=u;
+         }
+         else if(rank[v]>rank[u]){
+             parent[u]=v;
+         }
+         else{
+             parent[u]=v;
+             rank[v]++;
+         }
+     }
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
         // code here
-        vector<int>parent(V,-1);
-        vector<int>key(V,INT_MAX);
-        vector<bool>mst(V,false);
-        key[0]=0;
-         
-        for(int i=0;i<V-1;i++){
-            int mn=INT_MAX,u;
-            for(int j=0;j<V;j++){
-                if(key[j]<mn && mst[j]==false){
-                    mn=key[j];
-                    u=j;
-                }
-            }
-            
-            mst[u]=true;
-            for(auto it:adj[u]){
-                int first=it[0];
-                int second=it[1];
-               
-                if(key[first]>second && mst[first]==false){
-                     parent[first]=u;
-                     key[first]=second;
-                }
-            }
-        
-        }
-        int ans=0;
+        vector<vector<int>>edges;
         for(int i=0;i<V;i++){
-            ans+=key[i];
+            for(auto it:adj[i]){
+                 vector<int>v;
+                 v.push_back(it[1]);
+                 v.push_back(i);
+                 v.push_back(it[0]);
+                 edges.push_back(v);
+            }
+        }
+        vector<int>parent(V);
+        for(int i=0;i<V;i++){
+            parent[i]=i;
+        }
+        vector<int>rank(V,0);
+        sort(edges.begin(),edges.end());
+        int ans=0;
+        for(auto it:edges){
+            int w=it[0];
+            int u=it[1];
+            int v=it[2];
+            if(par(u,parent)!=par(v,parent)){
+                ans+=w;
+                unionn(u,v,rank,parent);
+            }
         }
         return ans;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 
 int main()
@@ -77,4 +88,5 @@ int main()
     return 0;
 }
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
