@@ -8,33 +8,22 @@ class Solution
 {
     public:
     //Function to return max value that can be put in knapsack of capacity W.
+    int f(int i,int w,int wt[],int val[],vector<vector<int>>&dp){
+        if(i==0){
+           if(w>=wt[i]) return val[0];
+           return 0;
+        }
+        if(dp[i][w]!=-1)return dp[i][w];
+        int t=INT_MIN;
+        if(w>=wt[i])t=val[i]+f(i-1,w-wt[i],wt,val,dp);
+        int nt=f(i-1,w,wt,val,dp);
+        return dp[i][w]=max(t,nt);
+    }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-       // Your code here;
-       vector<vector<int>>dp(n,vector<int>(W+1,0));
-       for(int w=wt[0];w<=W;w++){
-           dp[0][w]=val[0];
-       }
-       for(int i=1;i<n;i++){
-           for(int w=0;w<=W;w++){
-               int notpick=0+dp[i-1][w];
-               int pick=INT_MIN;
-               if(wt[i]<=w)pick=val[i]+dp[i-1][w-wt[i]];
-               dp[i][w]=max(pick,notpick);
-           }
-       }
-       return dp[n-1][W];
-    }
-    int f(int i,int wt[],int val[],int W,vector<vector<int>>&dp){
-        if(i==0){
-            if(wt[i]<=W)return val[i];
-            else return 0;
-        }
-        if(dp[i][W]!=-1)return dp[i][W];
-        int notpick=0+f(i-1,wt,val,W,dp);
-        int pick=INT_MIN;
-        if(wt[i]<=W)pick=val[i]+f(i-1,wt,val,W-wt[i],dp);
-        return dp[i][W]=max(pick,notpick);
+       // Your code here
+       vector<vector<int>>dp(n,vector<int>(W+1,-1));
+       return f(n-1,W,wt,val,dp);
     }
 };
 
