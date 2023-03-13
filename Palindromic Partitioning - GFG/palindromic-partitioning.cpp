@@ -9,33 +9,31 @@ using namespace std;
 
 class Solution{
 public:
-    int palindromicPartition(string str)
-    {
-        // code here
-        int n=str.size();
-        vector<int>dp(n,-1);
-        return f(0,n,str,dp)-1;
-    }
-    int f(int i,int n,string str,vector<int>&dp){
-        if(i==n)return 0;
-        if(dp[i]!=-1)return dp[i];
-        int mincost=INT_MAX;
-        for(int j=i;j<n;j++){
-            if(ispalin(i,j,str)){
-                int cost=1+f(j+1,n,str,dp);
-                mincost=min(mincost,cost);
-            }
-        }
-        return dp[i]=mincost;
-    }
-    bool ispalin(int i,int j,string str){
+    int isPalin(int i,int j,string s){
         while(i<j){
-            if(str[i]!=str[j])return false;
-            j--;
-            i++;
+            if(s[i++]!=s[j--])return false;
         }
         return true;
     }
+    int f(int i,string str,vector<int>&dp){
+        int mini=INT_MAX;
+        if(i==str.size())return 0;
+        if(dp[i]!=-1)return dp[i];
+        for(int ind=i;ind<str.size();ind++){
+            if(isPalin(i,ind,str)){
+               int steps=1+f(ind+1,str,dp);
+            mini=min(mini,steps);
+            }
+        }
+        return dp[i]=mini;
+    }
+    int palindromicPartition(string str)
+    {
+        // code here
+        vector<int>dp(str.size()+1,-1);
+        return f(0,str,dp)-1;
+    }
+    
 };
 
 //{ Driver Code Starts.
