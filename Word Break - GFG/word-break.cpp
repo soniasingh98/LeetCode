@@ -14,23 +14,22 @@ using namespace std;
 class Solution
 {
 public:
-
-int f(int i,string A,vector<string>&B,unordered_map<string,int>&m){
-    if(i==A.size())return true;
-    string s="";
-    for(int ind=i;ind<A.size();ind++){
-        s+=A[ind];
-        if(m.count(s) && (m.count(A.substr(ind+1,A.size())) || f(ind+1,A,B,m)))return 1;
-    }
-    return 0;
-}
     int wordBreak(string A, vector<string> &B) {
         //code here
         unordered_map<string,int>m;
-        for(int i=0;i<B.size();i++){
-            m[B[i]]++;
+        for(auto it:B){
+            m[it]++;
         }
         return f(0,A,B,m);
+    }
+    int f(int ind,string &s,vector<string>&b,unordered_map<string,int>&m){
+        if(ind==s.size())return 1;
+        string a="";
+        for(int i=ind;i<s.size();i++){
+            a+=s[i];
+            if(m.count(a) && f(i+1,s,b,m))return 1;
+        }
+        return 0;
     }
 };
 
