@@ -8,17 +8,17 @@ class Solution {
     // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         // Code here
-        vector<int>ans;
+        vector<int>v;
         vector<int>vis(V,0);
-        dfs(0,adj,vis,ans);
-        return ans;
+        dfs(0,v,vis,adj);
+        return v;
     }
-    void dfs(int src,vector<int>adj[],vector<int>&vis,vector<int>&ans){
-        vis[src]=1;
-        ans.push_back(src);
-        for(auto it:adj[src]){
+    void dfs(int i,vector<int>&v,vector<int>&vis,vector<int>adj[]){
+        vis[i]=1;
+        v.push_back(i);
+        for(auto it:adj[i]){
             if(!vis[it]){
-                dfs(it,adj,vis,ans);
+                dfs(it,v,vis,adj);
             }
         }
     }
