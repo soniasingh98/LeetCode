@@ -6,51 +6,49 @@ using namespace std;
 class Solution
 {
 	public:
-	int par(int i,vector<int>&parent){
-	    if(i==parent[i])return i;
-	    return par(parent[i],parent);
-	}
-     void unionn(int i,int j,vector<int>&rank,vector<int>&parent){
-         int u=par(i,parent),v=par(j,parent);
-         if(rank[u]>rank[v]){
-             parent[v]=u;
-         }
-         else if(rank[v]>rank[u]){
-             parent[u]=v;
-         }
-         else{
-             parent[u]=v;
-             rank[v]++;
-         }
-     }
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
+	 int findpar(int i,vector<int>&parent){
+            return parent[i]= (i==parent[i])?i:findpar(parent[i],parent);
+        }
+        
+        int unionn(int i,int j,vector<int>&rank,vector<int>&parent){
+            int u=parent[i];
+            int v=parent[j];
+            if(rank[u]>rank[v]){
+                parent[v]=u;
+            }
+            else if(rank[v]>rank[u]){
+                parent[u]=v;
+            }
+            else{
+                parent[u]=v;
+                v++;
+            }
+        }
     int spanningTree(int V, vector<vector<int>> adj[])
     {
         // code here
-        vector<vector<int>>edges;
-        for(int i=0;i<V;i++){
-            for(auto it:adj[i]){
-                 vector<int>v;
-                 v.push_back(it[1]);
-                 v.push_back(i);
-                 v.push_back(it[0]);
-                 edges.push_back(v);
-            }
-        }
-        vector<int>parent(V);
+        vector<int>rank(V,0),parent(V);
         for(int i=0;i<V;i++){
             parent[i]=i;
         }
-        vector<int>rank(V,0);
+       
+        vector<vector<int>>edges;
+        for(int i=0;i<V;i++){
+           for(auto it:adj[i]){
+               vector<int>v;
+               v.push_back(it[1]);
+               v.push_back(i);
+               v.push_back(it[0]);
+               edges.push_back(v);
+           }
+        }
         sort(edges.begin(),edges.end());
         int ans=0;
         for(auto it:edges){
-            int w=it[0];
-            int u=it[1];
-            int v=it[2];
-            if(par(u,parent)!=par(v,parent)){
-                ans+=w;
-                unionn(u,v,rank,parent);
+            if(findpar(it[1],parent)!=findpar(it[2],parent)){
+                ans+=it[0];
+                unionn(it[1],it[2],rank,parent);
             }
         }
         return ans;
