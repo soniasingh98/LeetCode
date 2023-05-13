@@ -11,20 +11,18 @@ class Solution
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         // Code here
+        vector<int>dis(V,INT_MAX);
         queue<int>q;
         q.push(S);
-        vector<int>dis(V,INT_MAX);
         dis[S]=0;
         while(!q.empty()){
-            int n=q.front();
+            int a=q.front();
             q.pop();
-            for(auto it:adj[n]){
-                int nn=it[0];
-                int w=it[1];
-                if(dis[nn]>dis[n]+w){
-                    dis[nn]=dis[n]+w;
-                    q.push(nn);
-                }
+            for(auto it:adj[a]){
+               if(dis[it[0]]>dis[a]+it[1]){
+                   dis[it[0]]=dis[a]+it[1];
+                   q.push(it[0]);
+               }
             }
         }
         return dis;
