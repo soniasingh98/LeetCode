@@ -106,27 +106,22 @@ class Solution
     {
         //Your code here
         map<int,int>m;
-          queue<pair<Node*,int>>q;
-          q.push({root,0});
-          while(!q.empty()){
-              pair<Node*,int>p=q.front();
-              q.pop();
-              if(m.find(p.second)==m.end()){
-                  
-                  m[p.second]=p.first->data;
-              }
-              if(p.first->left!=NULL){
-                  q.push({p.first->left,p.second-1});
-              }
-              if(p.first->right!=NULL){
-                  q.push({p.first->right,p.second+1});
-              }
-          }
-          vector<int>v;
-          for(auto it:m){
-              v.push_back(it.second);
-          }
-          return v;
+        queue<pair<Node*,int>>q;
+        q.push({root,0});
+        while(!q.empty()){
+            auto a=q.front();
+            q.pop();
+            Node* n=a.first;
+            int d=a.second;
+            if(m.find(d)==m.end())m[d]=n->data;
+            if(n->left)q.push({n->left,d-1});
+            if(n->right)q.push({n->right,d+1});
+        }
+        vector<int>v;
+        for(auto it:m){
+            v.push_back(it.second);
+        }
+        return v;
     }
 
 };
