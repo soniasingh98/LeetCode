@@ -15,21 +15,19 @@ class Solution{
     	// Your code here
     	sort(arr,arr+n);
     	sort(dep,dep+n);
-    	int count=1,result=1,i=1,j=0;
+    	int ct=1,ans=1,i=1,j=0;
     	while(i<n && j<n){
     	    if(arr[i]<=dep[j]){
-    	        count++;
+    	        ct++;
     	        i++;
     	    }
     	    else{
-    	        count--;
+    	        ct--;
     	        j++;
     	    }
-    	    if(count>result){
-    	        result=count;
-    	    }
+    	    if(ct>ans)ans=ct;
     	}
-    	return result;
+    	return ans;
     }
 };
 
