@@ -8,27 +8,27 @@ class Solution{
 public:
     // Function to determine if graph can be coloured with at most M colours such
     // that no two adjacent vertices of graph are coloured with same colour.
-    bool graphColoring(bool graph[101][101], int m, int n) {
-        // your code here
-        vector<int>colors(n,0);
-        return solve(0,graph,m,n,colors);
+    bool possible(int i,int c,vector<int>&col,bool graph[101][101],int n){
+        for(int j=0;j<n;j++){
+            if(j!=i && graph[i][j]==1 && c==col[j])return false;
+        }
+        return true;
     }
-    bool solve(int node,bool graph[101][101],int m,int n,vector<int>&colors){
-        if(node==n)return true;
-        for(int col=1;col<=m;col++){
-            if(safe(node,col,graph,colors,n)){
-                colors[node]=col;
-                if(solve(node+1,graph,m,n,colors))return true;
-                else colors[node]=0;
+    bool f(int i,vector<int>&col,bool graph[101][101],int m,int n){
+        if(i==n)return true;
+        for(int k=1;k<=m;k++){
+            if(possible(i,k,col,graph,n)){
+                col[i]=k;
+                if(f(i+1,col,graph,m,n))return true;
+                col[i]=0;
             }
         }
         return false;
     }
-    bool safe(int node,int col,bool graph[101][101],vector<int>&colors,int n){
-        for(int k=0;k<n;k++){
-            if(graph[node][k]==1 && colors[k]==col)return false;
-        }
-        return true;
+    bool graphColoring(bool graph[101][101], int m, int n) {
+        // your code here
+        vector<int>col(n,0);
+        return f(0,col,graph,m,n);
     }
 };
 
