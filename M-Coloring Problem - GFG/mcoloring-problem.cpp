@@ -10,7 +10,7 @@ public:
     // that no two adjacent vertices of graph are coloured with same colour.
     bool possible(int i,int c,vector<int>&col,bool graph[101][101],int n){
         for(int j=0;j<n;j++){
-            if(j!=i && graph[i][j]==1 && c==col[j])return false;
+            if( graph[i][j]==1 && c==col[j])return false;
         }
         return true;
     }
