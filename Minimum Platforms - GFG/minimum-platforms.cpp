@@ -15,17 +15,18 @@ class Solution{
     	// Your code here
     	sort(arr,arr+n);
     	sort(dep,dep+n);
-    	int ct=1,ans=1,i=1,j=0;
+    	int ct=0,ans=0;
+    	int i=0,j=0;
     	while(i<n && j<n){
     	    if(arr[i]<=dep[j]){
     	        ct++;
+    	        ans=max(ans,ct);
     	        i++;
     	    }
     	    else{
     	        ct--;
     	        j++;
     	    }
-    	    if(ct>ans)ans=ct;
     	}
     	return ans;
     }
